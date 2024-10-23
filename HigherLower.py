@@ -13,10 +13,10 @@ class Card:
 
         self.suit = suit
         self.rank = rank
-
+    #output card in rank suit format, e.g. 7♠
     def __str__(self):
         return f"{self.rank}{self.suit}"
-
+    #Output a card like a physical card
     def card_str(self):
         if self.rank == "10":
             return f"""
