@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import random
 
 class Card:
@@ -51,4 +52,7 @@ class Deck:
     def deal(self, num_cards = 1):
         pass
 
-Deck().debug_print_deck()
+deck=Deck()
+deck.shuffle()
+
+
