@@ -51,8 +51,23 @@ class Deck:
     
     def deal(self, num_cards = 1):
         pass
+    
+class Player:
+    def __init__(self, name):
+        self.name = name
+        self.score = 0
 
+playerNum = None
+while not playerNum:
+    try: 
+        playerNum = int(input("How many players: "))
+    except:
+        print("Input an integer")
+players = []
+for i in range(playerNum):
+    players.append(Player(input("Enter a name for player %s: "%(i+1))))
+for i in players:
+    print(i.name)
 deck=Deck()
 deck.shuffle()
-
 
