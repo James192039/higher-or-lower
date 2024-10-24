@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import random
+import random, time
 
 class Card:
     
@@ -93,14 +93,16 @@ while len(deck.cards)>0 and any([player.active for player in players]):
         print("-------------------NEXT PLAYER---------------------")
         if currentPlayer.active:
             print(f"Current Player: {currentPlayer.name}\nCurrent score: {currentPlayer.score}\nCurrent card: {currentPlayer.currentCard}")
+            startTime = time.perf_counter()
             playerInput = input("Will the next card be higher or lower \n(rank order for face value ties = ♠, ♦, ♣, ♥)\n").lower()
             while playerInput not in ["higher", "high", "h", "lower", "low","l"]:
                 playerInput = input("please input higher or lower: ")
+            timeDiff = time.perf_counter() - startTime
             nextCard = deck.deal()
             isHigher = deck.checkHigh(currentPlayer.currentCard, nextCard)
             if (playerInput in ["higher", "high", "h"] and isHigher) or (playerInput in ["lower", "low","l"] and not isHigher):
                 print("Correct")
-                currentPlayer.score = currentPlayer.score + 1
+                currentPlayer.score = currentPlayer.score + 1 + max(int(3-timeDiff), 0)
                 currentPlayer.currentCard = nextCard
             else:
                 print("Incorrect")
