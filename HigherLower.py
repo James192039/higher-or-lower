@@ -67,6 +67,8 @@ class Player:
     def __init__(self, name):
         self.name = name
         self.score = 0
+        self.currentCard=None
+        self.active = True
 
 playerNum = None
 while not playerNum:
@@ -77,36 +79,44 @@ while not playerNum:
 players = []
 for i in range(playerNum):
     players.append(Player(input("Enter a name for player %s: "%(i+1))))
-    
-for currentPlayer in players:
-    print("-------------------NEXT PLAYER---------------------")
-    deck=Deck()
-    deck.shuffle()
-    currentCard = deck.deal()
-    while len(deck.cards)>0:
-        print(f"Current Player: {currentPlayer.name}\nCurrent score: {currentPlayer.score}")
-        playerInput = input("Will the next card be higher or lower \n(rank order for face value ties = ♠, ♦, ♣, ♥)\n").lower()
-        while playerInput not in ["higher", "high", "h", "lower", "low","l"]:
-            playerInput = input("please input higher or lower: ")
-        nextCard = deck.deal()
-        isHigher = deck.checkHigh(currentCard, nextCard)
-        if (playerInput in ["higher", "high", "h"] and isHigher) or (playerInput in ["lower", "low","l"] and not isHigher):
-            print("Correct")
-            print(currentPlayer.score)
-            currentPlayer.score = currentPlayer.score + 1
-            print(currentPlayer.score)
-            currentCard = nextCard
+
+deck=Deck()
+deck.shuffle()
+
+for player in players:
+    print(f"{player.name}'s starting card:")
+    player.currentCard = deck.deal()
+deck=Deck()
+deck.shuffle()
+while len(deck.cards)>0 and any([player.active for player in players]):
+    for currentPlayer in players:
+        print("-------------------NEXT PLAYER---------------------")
+        if currentPlayer.active:
+            print(f"Current Player: {currentPlayer.name}\nCurrent score: {currentPlayer.score}\nCurrent card: {currentPlayer.currentCard}")
+            playerInput = input("Will the next card be higher or lower \n(rank order for face value ties = ♠, ♦, ♣, ♥)\n").lower()
+            while playerInput not in ["higher", "high", "h", "lower", "low","l"]:
+                playerInput = input("please input higher or lower: ")
+            nextCard = deck.deal()
+            isHigher = deck.checkHigh(currentPlayer.currentCard, nextCard)
+            if (playerInput in ["higher", "high", "h"] and isHigher) or (playerInput in ["lower", "low","l"] and not isHigher):
+                print("Correct")
+                print(currentPlayer.score)
+                currentPlayer.score = currentPlayer.score + 1
+                print(currentPlayer.score)
+                currentPlayer.currentCard = nextCard
+            else:
+                print("Incorrect")
+                currentPlayer.score = 0
+                currentPlayer.active=False
+                continue
+            playerInput = input("Continue playing (your score resets to 0 on an incorrect guess): ").lower()
+            while not playerInput in ["y","yes","n","no"]:
+                playerInput = input("Enter y, yes, n, or no: ")
+            if playerInput in ["n", "no"]:
+                currentPlayer.active=False
+                continue
         else:
-            print("Incorrect")
-            currentPlayer.score = 0
-            break
-        playerInput = input("Continue playing (your score resets to 0 on an incorrect guess): ").lower()
-        while not playerInput in ["y","yes","n","no"]:
-            playerInput = input("Enter y, yes, n, or no: ")
-        if playerInput in ["n", "no"]:
-            break
-    
-    
+            print(f"{currentPlayer.name} is out and will be skipped")
 print("""-------------------GAME END---------------------
 Player Scores:""")
 for i in players:
