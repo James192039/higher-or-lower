@@ -79,6 +79,7 @@ for i in range(playerNum):
     players.append(Player(input("Enter a name for player %s: "%(i+1))))
     
 for currentPlayer in players:
+    print("-------------------NEXT PLAYER---------------------")
     deck=Deck()
     deck.shuffle()
     currentCard = deck.deal()
@@ -104,9 +105,9 @@ for currentPlayer in players:
             playerInput = input("Enter y, yes, n, or no: ")
         if playerInput in ["n", "no"]:
             break
-    print("-------------------NEXT PLAYER---------------------")
     
-print(""""-------------------GAME END---------------------
+    
+print("""-------------------GAME END---------------------
 Player Scores:""")
 for i in players:
         print(f"Name: {i.name}, Score: {i.score}")
