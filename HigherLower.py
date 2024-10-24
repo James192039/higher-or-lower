@@ -100,9 +100,7 @@ while len(deck.cards)>0 and any([player.active for player in players]):
             isHigher = deck.checkHigh(currentPlayer.currentCard, nextCard)
             if (playerInput in ["higher", "high", "h"] and isHigher) or (playerInput in ["lower", "low","l"] and not isHigher):
                 print("Correct")
-                print(currentPlayer.score)
                 currentPlayer.score = currentPlayer.score + 1
-                print(currentPlayer.score)
                 currentPlayer.currentCard = nextCard
             else:
                 print("Incorrect")
