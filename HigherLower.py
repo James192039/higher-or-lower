@@ -50,7 +50,8 @@ class Deck:
             print(card.card_str())
     
     def deal(self, num_cards = 1):
-        pass
+       print(self.cards[0].card_str())
+       return self.cards.pop(0)
     
 class Player:
     def __init__(self, name):
@@ -70,4 +71,4 @@ for i in players:
     print(i.name)
 deck=Deck()
 deck.shuffle()
-
+deck.deal()
