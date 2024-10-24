@@ -48,7 +48,7 @@ class Deck:
     def debug_print_deck(self):
         for card in self.cards:
             print(card.card_str())
-    
+    #Return the first card in cards list, display the card, remove the card from the cards list
     def deal(self, num_cards = 1):
        print(self.cards[0].card_str())
        return self.cards.pop(0)
